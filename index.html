@@ -18,15 +18,50 @@
             color: #333;
         }
 
-        /* Header - PALETA MODIFICADA */
+        /* Header - MODIFICADO PARA SCROLL EFFECT CON TRANSICIÓN SUAVE */
         header {
-            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%); /* TEAL GRADIENTE */
             color: white;
             padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
+            position: fixed; 
+            width: 100%; 
             top: 0;
             z-index: 1000;
+            /* Removemos la transición de background-color/image */
+            transition: box-shadow 0.7s; 
+            /* Fondo base transparente siempre */
+            background-color: transparent;
+        }
+
+        /* Pseudo-elemento para el gradiente */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            opacity: 0; /* Inicialmente invisible */
+            transition: opacity 0.7s ease-in-out; /* Transición suave de opacidad */
+            z-index: -1; /* Detrás del contenido del header */
+        }
+
+        /* NUEVA CLASE PARA EL ESTADO TRANSPARENTE INICIAL */
+        header.transparent-header::before {
+            opacity: 0; /* Gradiente invisible */
+        }
+
+        header.transparent-header {
+            box-shadow: none !important;
+        }
+
+        /* CLASE PARA CUANDO SE HA HECHO SCROLL */
+        header.scrolled-header::before {
+            opacity: 1; /* Gradiente visible */
+        }
+
+        header.scrolled-header {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .header-top {
@@ -95,6 +130,7 @@
             position: relative;
             height: 500px;
             overflow: hidden;
+            /* Removimos el margen negativo, ya que position: fixed lo solapa automáticamente */
         }
 
         .slide {
@@ -181,7 +217,7 @@
         /* Info Cards */
         .info-cards {
             max-width: 1200px;
-            margin: -80px auto 4rem;
+            margin: -80px auto 4rem; 
             padding: 0 2rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -218,7 +254,8 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            /* CORRECCIÓN: Ajuste el padding-top para compensar el header fijo (aprox 60px) */
+            padding: calc(4rem + 60px) 2rem 4rem;
         }
 
         .welcome-section {
@@ -480,7 +517,7 @@
     </style>
 </head>
 <body>
-    <header>
+    <header id="mainHeader" class="transparent-header">
         <div class="header-top">
             <div class="logo">
                 <i class="fas fa-microscope"></i>
@@ -710,6 +747,22 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        });
+
+        // Lógica para cambiar el estilo del Header al hacer scroll
+        const mainHeader = document.getElementById('mainHeader');
+        const scrollThreshold = 50; // Pixeles para cambiar el estilo
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                // El usuario ha scrolleado más allá del umbral
+                mainHeader.classList.remove('transparent-header');
+                mainHeader.classList.add('scrolled-header');
+            } else {
+                // El usuario está cerca del top de la página
+                mainHeader.classList.remove('scrolled-header');
+                mainHeader.classList.add('transparent-header');
+            }
         });
     </script>
 </body>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obras Sociales - Laboratorio BioGenesis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            color: white;
+            padding: 1rem 0;
+            position: fixed; 
+            width: 100%; 
+            top: 0;
+            z-index: 1000;
+            transition: box-shadow 0.7s; 
+            background-color: transparent;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+            z-index: -1;
+        }
+
+        header.transparent-header::before {
+            opacity: 0;
+        }
+
+        header.transparent-header {
+            box-shadow: none !important;
+        }
+
+        header.scrolled-header::before {
+            opacity: 1;
+        }
+
+        header.scrolled-header {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            display: block; 
+            padding: 0.5rem 0;
+        }
+
+        nav a:hover {
+            color: #CDDC39;
+        }
+
+        nav a.active-page {
+            color: #CDDC39;
+        }
+        
+        nav a.active-page:hover {
+            color: #CDDC39;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 77, 64, 0.85), rgba(0, 77, 64, 0.85)), 
+                        url('https://i.pinimg.com/1200x/cf/a8/52/cfa852138c1f4729c23e3a592a3dd57b.jpg') center/cover;
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            margin-top: 0;
+            padding-top: 10rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .intro-section h2 {
+            color: #004D40;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #00BFA5;
+            margin-bottom: 3rem;
+        }
+
+        .info-box h3 {
+            color: #004D40;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .info-box h3 i {
+            color: #00BFA5;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            padding: 0.5rem 0;
+            color: #666;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .info-box li i {
+            color: #00BFA5;
+            margin-top: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        /* Search Box */
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 3rem; /* Ajustado el margen para separarlo del título y la grilla */
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 3.5rem 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid #004D40;
+            border-radius: 50px;
+            outline: none;
+            transition: box-shadow 0.3s;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 0 15px rgba(0, 77, 64, 0.3);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #004D40;
+            font-size: 1.2rem;
+        }
+
+        /* Obras Sociales Grid */
+        .obras-sociales-section {
+            margin-bottom: 4rem;
+        }
+
+        .obras-sociales-section h2 {
+            color: #004D40;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .obras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .obra-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid #f0f0f0;
+            text-align: center;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+
+        .obra-card:hover {
+            border-color: #00BFA5;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .obra-card span {
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .obra-card.hidden {
+            display: none;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 10px;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #004D40;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #004D40;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #00BFA5;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-section i {
+            margin-right: 0.5rem;
+            color: #00BFA5;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                justify-content: center;
+                position: relative;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 1.5rem;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+                padding: 5rem 2rem 2rem;
+                transition: right 0.3s ease-in-out;
+                z-index: 1000;
+                box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav a {
+                display: block;
+                padding: 1rem 0;
+                font-size: 1.1rem;
+            }
+
+            .page-header {
+                padding: 6rem 2rem 3rem;
+                padding-top: 8rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .obras-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section ul {
+                padding-left: 0; 
+                width: fit-content; 
+                margin: 0 auto; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader" class="transparent-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-microscope"></i>
+                <span>BioGenesis</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li> 
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="indicaciones.html">Indicaciones</a></li>
+                    <li><a href="analisis.html">Análisis que Realizamos</a></li>
+                    <li><a href="obras-sociales.html" class="active-page">Obras Sociales</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Obras Sociales y Prepagas</h1>
+        <p>Trabajamos con las principales obras sociales y prepagas del país</p>
+    </section>
+
+    <div class="container">
+        <section class="intro-section">
+            <h2>Cobertura Médica</h2>
+            <p>Tenemos convenio con las principales obras sociales y empresas de medicina prepaga. Realizá tus estudios con la comodidad de tu cobertura médica.</p>
+        </section>
+
+        <div class="info-box">
+            <h3><i class="fas fa-info-circle"></i>Información Importante</h3>
+            <ul>
+                <li><i class="fas fa-check-circle"></i>Traer credencial vigente y orden médica</li>
+                <li><i class="fas fa-check-circle"></i>Verificar autorización previa si su obra social lo requiere</li>
+                <li><i class="fas fa-check-circle"></i>Consultar coseguros y copagos en recepción</li>
+                <li><i class="fas fa-check-circle"></i>Para PAMI: presentar DNI y carnet de PAMI actualizado</li>
+                <li><i class="fas fa-check-circle"></i>Si su obra social no figura en el listado, consultanos por convenios particulares</li>
+            </ul>
+        </div>
+
+        <section class="obras-sociales-section">
+            <h2>Obras Sociales y Prepagas con Convenio</h2>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar obra social o prepaga...">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <div class="obras-grid" id="obrasGrid">
+                <div class="obra-card"><span>PAMI</span></div>
+                <div class="obra-card"><span>OSDE</span></div>
+                <div class="obra-card"><span>Swiss Medical</span></div>
+                <div class="obra-card"><span>Galeno</span></div>
+                <div class="obra-card"><span>IOMA</span></div>
+                <div class="obra-card"><span>OSECAC</span></div>
+                <div class="obra-card"><span>OSPE</span></div>
+                <div class="obra-card"><span>OSPEDYC</span></div>
+                <div class="obra-card"><span>OSDEPYM</span></div>
+                <div class="obra-card"><span>OSMEDICA</span></div>
+                
+                <div class="obra-card"><span>Medifé</span></div>
+                <div class="obra-card"><span>Sancor Salud</span></div>
+                <div class="obra-card"><span>Prevención Salud</span></div>
+                <div class="obra-card"><span>Hospital Alemán</span></div>
+                <div class="obra-card"><span>Hospital Británico</span></div>
+                <div class="obra-card"><span>Hospital Italiano</span></div>
+                <div class="obra-card"><span>Omint</span></div>
+                <div class="obra-card"><span>ACA Salud</span></div>
+                
+                <div class="obra-card"><span>OSUNION (UOM)</span></div>
+                <div class="obra-card"><span>OSTEL</span></div>
+                <div class="obra-card"><span>OSPRERA</span></div>
+                <div class="obra-card"><span>OSFATUN</span></div>
+                <div class="obra-card"><span>OSPIM</span></div>
+                <div class="obra-card"><span>OSFATLYF</span></div>
+                <div class="obra-card"><span>OSPIA</span></div>
+                <div class="obra-card"><span>OSPSA</span></div>
+                <div class="obra-card"><span>OSPOCE</span></div>
+                <div class="obra-card"><span>OSPIL</span></div>
+                
+                <div class="obra-card"><span>APROSS</span></div>
+                <div class="obra-card"><span>DASUTEN</span></div>
+                <div class="obra-card"><span>IAPOS</span></div>
+                <div class="obra-card"><span>OSEP</span></div>
+                <div class="obra-card"><span>OSCHOCA</span></div>
+                
+                <div class="obra-card"><span>IOSFA (Fuerzas Armadas)</span></div>
+                <div class="obra-card"><span>IOSE (Ejército)</span></div>
+                <div class="obra-card"><span>OSPF (Policía Federal)</span></div>
+                <div class="obra-card"><span>OSSSB (Banco de la Nación)</span></div>
+                <div class="obra-card"><span>Poder Judicial</span></div>
+                
+                <div class="obra-card"><span>OSPLAD</span></div>
+                <div class="obra-card"><span>OSUTHGRA</span></div>
+                <div class="obra-card"><span>OSTEP</span></div>
+                
+                <div class="obra-card"><span>Asociación Española</span></div>
+                <div class="obra-card"><span>AMFFA</span></div>
+                <div class="obra-card"><span>AMCI</span></div>
+                <div class="obra-card"><span>SADAIC</span></div>
+                <div class="obra-card"><span>Futbolistas Agremiados</span></div>
+                
+                <div class="obra-card"><span>UPCN</span></div>
+                <div class="obra-card"><span>SOEME</span></div>
+                <div class="obra-card"><span>ATSA</span></div>
+                <div class="obra-card"><span>ASTRA</span></div>
+                <div class="obra-card"><span>OSSEG</span></div>
+                <div class="obra-card"><span>OSFATUN</span></div>
+                <div class="obra-card"><span>Jerarquicos Salud</span></div>
+                <div class="obra-card"><span>Consolidar Salud</span></div>
+            </div>
+            
+            <div class="no-results" id="noResults">
+                <i class="fas fa-search"></i>
+                <h3>No se encontraron resultados</h3>
+                <p>No encontramos la obra social que buscás. Consultanos por convenios particulares.</p>
+            </div>
+        </section>
+    </div>
+
+    <section class="cta-section">
+        <h2>¿Tu obra social no está en el listado?</h2>
+        <p>Contactanos para consultar por convenios particulares o atención como paciente privado</p>
+        <div class="cta-buttons">
+            <a href="contacto.html" class="btn-primary">Contactar</a>
+            <a href="tel:3514238765" class="btn-secondary"><i class="fas fa-phone"></i> (0351) 423-8765</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Laboratorio BioGenesis</h3>
+                <p>Calidad y excelencia en análisis clínicos desde 1998.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>Av. Colón 1250, Córdoba</li>
+                    <li><i class="fas fa-phone"></i>351 423-8765</li>
+                    <li><i class="fas fa-envelope"></i>info@biogenesis.com.ar</li>
+                    <li><i class="fa-brands fa-whatsapp"></i>351 234-5678</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <ul>
+                    <li>Lunes a Viernes: 7:00 - 20:00 hs</li>
+                    <li>Sábados: 7:30 - 13:00 hs</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces</h3>
+                <ul>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="indicaciones.html">Preparación para Estudios</a></li>
+                    <li><a href="obras-sociales.html">Obras Sociales</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="font-size: 0.7rem;">&copy; 2025 Laboratorio BioGenesis - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        const navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+                mainNav.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Header scroll effect
+        const mainHeader = document.getElementById('mainHeader');
+        const scrollThreshold = 50;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                mainHeader.classList.remove('transparent-header');
+                mainHeader.classList.add('scrolled-header');
+            } else {
+                mainHeader.classList.remove('scrolled-header');
+                mainHeader.classList.add('transparent-header');
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const obraCards = document.querySelectorAll('.obra-card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            obraCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

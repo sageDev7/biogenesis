@@ -6,7 +6,6 @@
     <title>Nosotros - Laboratorio BioGenesis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* INICIO DEL ESTILO COPIADO DE INDEX.HTML */
         * {
             margin: 0;
             padding: 0;
@@ -17,18 +16,47 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f8f9fa; /* Fondo claro para la página */
         }
 
-        /* Header - PALETA MODIFICADA */
+        /* Header */
         header {
-            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%); /* TEAL GRADIENTE */
             color: white;
             padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
+            position: fixed; 
+            width: 100%; 
             top: 0;
             z-index: 1000;
+            transition: box-shadow 0.7s; 
+            background-color: transparent;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+            z-index: -1;
+        }
+
+        header.transparent-header::before {
+            opacity: 0;
+        }
+
+        header.transparent-header {
+            box-shadow: none !important;
+        }
+
+        header.scrolled-header::before {
+            opacity: 1;
+        }
+
+        header.scrolled-header {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .header-top {
@@ -79,7 +107,7 @@
         }
 
         nav a:hover {
-            color: #CDDC39; /* VERDE LIMA */
+            color: #CDDC39;
         }
 
         nav a.active-page {
@@ -89,196 +117,274 @@
         nav a.active-page:hover {
             color: #CDDC39;
         }
-        
-        /* Botones */
-        .btn-primary {
-            background: #004D40; /* TEAL OSCURO */
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 77, 64, 0.85), rgba(0, 77, 64, 0.85)), 
+                        url('https://i.pinimg.com/1200x/cf/a8/52/cfa852138c1f4729c23e3a592a3dd57b.jpg') center/cover;
             color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn-primary:hover {
-            background: #00BFA5; /* TEAL MEDIO */
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            margin-top: 0; /* CAMBIÁ ESTO: antes era margin-top: 60px */
+            padding-top: 10rem; /* AUMENTÁ ESTO: antes era 8rem en el padding general */
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: #004D40;
-            padding: 1rem 2rem;
-            border: 2px solid #004D40;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .btn-secondary:hover {
-            background: #004D40;
-            color: white;
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        /* Main Content */
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 4rem 2rem;
         }
-        
-        /* Sección Título Hero (Simulación de Banner Fijo) */
-        .page-hero {
-            background: linear-gradient(rgba(0, 77, 64, 0.8), rgba(0, 191, 165, 0.8)), 
-                        url('https://i.pinimg.com/1200x/cf/a8/52/cfa852138c1f4729c23e3a592a3dd57b.jpg') center/cover;
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.2);
-        }
 
-        .page-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        /* Títulos de sección */
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #004D40; 
-            margin-bottom: 3rem;
-            position: relative;
-        }
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: #00BFA5;
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        /* Sección de Contenido de Nosotros */
-        .about-content {
-            display: flex;
-            flex-wrap: wrap;
+        /* Historia Section */
+        .historia-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 3rem;
-            margin-bottom: 4rem;
             align-items: center;
+            margin-bottom: 5rem;
         }
 
-        .about-text {
-            flex: 1 1 55%;
-            min-width: 300px;
+        .historia-content h2 {
+            color: #004D40;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .about-image {
-            flex: 1 1 30%;
-            min-width: 200px;
+        .historia-content p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .historia-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .historia-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            color: white;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
             text-align: center;
         }
-        
-        .about-image img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
+
+        .stat-item i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Valores Section */
+        .valores-section {
+            margin: 5rem 0;
+        }
+
+        .valores-section h2 {
+            color: #004D40;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .valor-card {
+            background: #f8f9fa;
+            padding: 2.5rem;
             border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .valor-card:hover {
+            transform: translateY(-10px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        /* Misión y Visión Cards */
-        .mvv-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
+        .valor-card i {
+            font-size: 3.5rem;
+            color: #004D40;
+            margin-bottom: 1.5rem;
         }
 
-        .mvv-card {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid #00BFA5; /* Borde superior brillante */
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .mvv-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .mvv-card i {
-            font-size: 2.5rem;
-            color: #004D40; 
+        .valor-card h3 {
+            color: #004D40;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
         }
 
-        .mvv-card h3 {
-            color: #004D40; 
-            margin-bottom: 0.8rem;
+        .valor-card p {
+            color: #666;
+            font-size: 1rem;
         }
 
-        /* Sección del Equipo */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
+        /* Equipo Section */
+        .equipo-section {
+            background: #f8f9fa;
+            padding: 5rem 2rem;
+            margin: 5rem 0;
+        }
+
+        .equipo-section h2 {
+            color: #004D40;
+            font-size: 2.5rem;
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .team-member {
-            background-color: white;
-            padding: 1.5rem;
+        .equipo-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .equipo-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .equipo-card {
+            background: white;
+            padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .equipo-card i {
+            font-size: 4rem;
+            color: #004D40;
+            margin-bottom: 1rem;
+        }
+
+        .equipo-card h4 {
+            color: #004D40;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .equipo-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Certificaciones Section */
+        .certificaciones-section {
+            margin: 5rem 0;
+        }
+
+        .certificaciones-section h2 {
+            color: #004D40;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .certificaciones-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .certificaciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .certificacion-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #004D40;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s;
         }
 
-        .team-member:hover {
-            transform: scale(1.03);
+        .certificacion-card:hover {
+            transform: translateX(5px);
         }
 
-        .member-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1rem;
-            border: 4px solid #00BFA5;
-            padding: 3px;
+        .certificacion-card i {
+            font-size: 2.5rem;
+            color: #00BFA5;
+            margin-bottom: 1rem;
         }
 
-        .team-member h4 {
-            color: #004D40; 
-            margin-bottom: 0.3rem;
+        .certificacion-card h4 {
+            color: #004D40;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
         }
 
-        .team-member p {
-            font-size: 0.9rem;
+        .certificacion-card p {
             color: #666;
+            font-size: 0.95rem;
         }
-        
-        /* CTA Section - PALETA MODIFICADA (Copied from index.html)*/
+
+        /* CTA Section */
         .cta-section {
-            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%); /* TEAL GRADIENTE */
+            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
             color: white;
             padding: 4rem 2rem;
             text-align: center;
-            margin: 4rem 0 0 0; /* Ajustado para que el footer siga inmediatamente */
+            margin: 4rem 0;
         }
 
         .cta-section h2 {
@@ -291,34 +397,26 @@
             margin-bottom: 2rem;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .cta-buttons .btn-primary {
+        .btn-primary {
             background: white;
             color: #004D40;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .cta-buttons .btn-primary:hover {
-            background: #CDDC39; /* Verde lima en hover */
-        }
-        
-        .cta-buttons .btn-secondary {
-            color: white;
-            border-color: white;
-        }
-        
-        .cta-buttons .btn-secondary:hover {
-            background: #CDDC39; /* Verde lima en hover */
-            color: #004D40;
-            border-color: #CDDC39;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* Footer - PALETA MODIFICADA */
+        /* Footer */
         footer {
             background: #1a1a1a;
             color: white;
@@ -336,7 +434,7 @@
 
         .footer-section h3 {
             margin-bottom: 1rem;
-            color: #00BFA5; /* TEAL BRILLANTE */
+            color: #00BFA5;
         }
 
         .footer-section ul {
@@ -359,7 +457,7 @@
 
         .footer-section i {
             margin-right: 0.5rem;
-            color: #00BFA5; /* TEAL BRILLANTE */
+            color: #00BFA5;
         }
 
         .footer-bottom {
@@ -370,9 +468,8 @@
             text-align: center;
             color: #999;
         }
-        /* FIN DEL ESTILO COPIADO DE INDEX.HTML */
 
-        /* MEDIA QUERIES (Ajustado de index.html) */
+        /* Responsive */
         @media (max-width: 768px) {
             .header-top {
                 justify-content: center;
@@ -391,7 +488,7 @@
                 right: -100%;
                 width: 280px;
                 height: 100vh;
-                background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%); /* TEAL GRADIENTE */
+                background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
                 padding: 5rem 2rem 2rem;
                 transition: right 0.3s ease-in-out;
                 z-index: 1000;
@@ -416,36 +513,37 @@
                 padding: 1rem 0;
                 font-size: 1.1rem;
             }
-            
-            .page-hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .about-image {
-                order: -1; /* Coloca la imagen arriba en móvil */
+
+            .page-header {
+                padding: 6rem 2rem 3rem;
             }
 
-            .mvv-grid {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .historia-section {
                 grid-template-columns: 1fr;
             }
 
-            .team-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-            
-            .cta-section h2 {
-                font-size: 1.8rem;
+            .historia-image {
+                height: 300px;
             }
 
-            .footer-content {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .valores-grid,
+            .certificaciones-grid {
                 grid-template-columns: 1fr;
             }
 
-            /* Footer Centrado en Mobile (corrección mantenida) */
             .footer-section {
                 text-align: center;
             }
@@ -462,27 +560,22 @@
                 font-size: 1.5rem;
             }
 
-            nav ul {
-                font-size: 0.9rem;
+            .page-header h1 {
+                font-size: 1.8rem;
             }
 
-            .page-hero {
-                padding: 4rem 1rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
 
-            .btn-primary, .btn-secondary {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.9rem;
+            .stat-number {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header id="mainHeader" class="transparent-header">
         <div class="header-top">
             <div class="logo">
                 <i class="fas fa-microscope"></i>
@@ -504,96 +597,148 @@
         </div>
     </header>
 
-    <section class="page-hero">
-        <h1>Comprometidos con la Calidad y tu Salud</h1>
-        <p>Conocé nuestra historia, misión y al equipo de profesionales detrás de cada resultado.</p>
+    <section class="page-header">
+        <h1>Nosotros</h1>
+        <p>Conocé nuestra historia, valores y compromiso con la excelencia en análisis clínicos</p>
     </section>
 
     <div class="container">
-        
-        <section>
-            <h2 class="section-title">Nuestra Trayectoria</h2>
-            
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Laboratorio BioGenesis fue fundado en 1998 con la visión de convertirse en un referente de diagnóstico clínico de alta calidad en la ciudad de Córdoba. A lo largo de más de dos décadas, hemos crecido de ser un pequeño centro a un laboratorio de alta complejidad, incorporando constantemente tecnología de punta y ampliando nuestra gama de servicios.</p>
-                    <p>Nuestro compromiso inquebrantable con la precisión nos ha llevado a obtener múltiples certificaciones nacionales e internacionales, garantizando que cada muestra es procesada bajo los estándares más rigurosos. Creemos que un diagnóstico preciso es el primer paso hacia una atención médica efectiva, y trabajamos diariamente para ser el socio de confianza de médicos y pacientes.</p>
-                    <p>Hoy, BioGenesis es sinónimo de experiencia, innovación y calidez humana. </p>
-                </div>
-                <div class="about-image">
-                    <img src="https://placehold.co/400x500/004D40/ffffff?text=BioGenesis+1998" alt="Fachada o primera imagen del laboratorio">
-                </div>
+        <section class="historia-section">
+            <div class="historia-content">
+                <h2>Nuestra Historia</h2>
+                <p>Desde 1998, Laboratorio BioGenesis se ha consolidado como uno de los centros de diagnóstico más confiables de Córdoba. Comenzamos como un pequeño laboratorio con el sueño de brindar servicios de análisis clínicos de alta calidad con un trato humano y personalizado.</p>
+                <p>A lo largo de más de 25 años, hemos crecido e incorporado tecnología de última generación, ampliado nuestro equipo de profesionales y expandido nuestra oferta de estudios, siempre manteniendo nuestro compromiso con la excelencia y la atención personalizada que nos caracteriza.</p>
+                <p>Hoy somos un laboratorio de referencia en la región, reconocidos por nuestra calidad, precisión y calidez humana en cada atención.</p>
+            </div>
+            <div class="historia-image">
+                <img src="https://i.pinimg.com/1200x/86/ff/e9/86ffe94b00cea02c3d2c3f18bce327c3.jpg" alt="Laboratorio BioGenesis">
             </div>
         </section>
+    </div>
 
-        <section style="margin-top: 5rem;">
-            <h2 class="section-title">Misión, Visión y Valores</h2>
-            
-            <div class="mvv-grid">
-                <div class="mvv-card">
-                    <i class="fas fa-bullseye"></i>
-                    <h3>Nuestra Misión</h3>
-                    <p>Brindar servicios de análisis clínicos y diagnósticos de alta complejidad, garantizando resultados precisos y oportunos a través de la excelencia técnica, la innovación tecnológica y un profundo sentido ético, para contribuir al cuidado de la salud de la comunidad.</p>
-                </div>
-                <div class="mvv-card">
-                    <i class="fas fa-eye"></i>
-                    <h3>Nuestra Visión</h3>
-                    <p>Ser el laboratorio de referencia en la región, reconocido por la calidad certificada de nuestros procesos, la atención humana y personalizada, y la constante inversión en ciencia y tecnología para liderar el futuro del diagnóstico clínico.</p>
-                </div>
-                <div class="mvv-card">
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="stat-number">25+</span>
+                <span class="stat-label">Años de Experiencia</span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-flask"></i>
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Estudios Diferentes</span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <span class="stat-number">50.000+</span>
+                <span class="stat-label">Pacientes Atendidos</span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-user-md"></i>
+                <span class="stat-number">30+</span>
+                <span class="stat-label">Profesionales</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="valores-section">
+            <h2>Nuestros Valores</h2>
+            <div class="valores-grid">
+                <div class="valor-card">
                     <i class="fas fa-heart"></i>
-                    <h3>Nuestros Valores</h3>
-                    <ul>
-                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Precisión y Confianza</li>
-                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Ética y Transparencia</li>
-                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Innovación Continua</li>
-                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Calidez Humana</li>
-                    </ul>
+                    <h3>Compromiso</h3>
+                    <p>Nos comprometemos con la salud y bienestar de cada paciente, brindando servicios de la más alta calidad y confiabilidad.</p>
+                </div>
+                <div class="valor-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Excelencia</h3>
+                    <p>Buscamos la excelencia en cada proceso, desde la toma de muestras hasta la entrega de resultados, con los más altos estándares de calidad.</p>
+                </div>
+                <div class="valor-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Innovación</h3>
+                    <p>Incorporamos constantemente nuevas tecnologías y metodologías para ofrecer diagnósticos más precisos y eficientes.</p>
+                </div>
+                <div class="valor-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Confianza</h3>
+                    <p>Construimos relaciones de confianza con nuestros pacientes, médicos y obras sociales basadas en la transparencia y profesionalismo.</p>
+                </div>
+                <div class="valor-card">
+                    <i class="fas fa-smile"></i>
+                    <h3>Calidez Humana</h3>
+                    <p>Tratamos a cada paciente con respeto, empatía y dedicación, entendiendo que detrás de cada análisis hay una persona.</p>
+                </div>
+                <div class="valor-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Capacitación</h3>
+                    <p>Nuestro equipo se mantiene en constante actualización y capacitación para brindar el mejor servicio posible.</p>
                 </div>
             </div>
         </section>
-        
-        <section style="margin-top: 5rem;">
-            <h2 class="section-title">Conocé a Nuestro Equipo</h2>
-            <p style="text-align: center; margin-bottom: 2rem; font-style: italic;">Un grupo de profesionales altamente calificados y dedicados a tu bienestar.</p>
-            
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=JD" alt="Foto de la Dra. Juliana Díaz" class="member-photo">
-                    <h4>Dra. Juliana Díaz</h4>
-                    <p>Directora Bioquímica</p>
-                    <p style="font-size: 0.8rem; color: #00BFA5;">Especialista en Inmunología</p>
-                </div>
-                <div class="team-member">
-                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=AR" alt="Foto del Lic. Alejandro Ruiz" class="member-photo">
-                    <h4>Lic. Alejandro Ruiz</h4>
-                    <p>Jefe de Laboratorio</p>
-                    <p style="font-size: 0.8rem; color: #00BFA5;">Especialista en Hematología</p>
-                </div>
-                <div class="team-member">
-                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=LC" alt="Foto de la Bioq. Laura Castro" class="member-photo">
-                    <h4>Bioq. Laura Castro</h4>
-                    <p>Área de Biología Molecular</p>
-                    <p style="font-size: 0.8rem; color: #00BFA5;">Investigadora y Docente</p>
-                </div>
-                <div class="team-member">
-                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=EM" alt="Foto del Téc. Enrique Martínez" class="member-photo">
-                    <h4>Téc. Enrique Martínez</h4>
-                    <p>Coordinador de Extracciones</p>
-                    <p style="font-size: 0.8rem; color: #00BFA5;">Atención y Calidez</p>
-                </div>
-            </div>
-        </section>
+    </div>
 
+    <section class="equipo-section">
+        <h2>Nuestro Equipo</h2>
+        <p class="equipo-intro">Contamos con un equipo multidisciplinario de profesionales altamente capacitados y especializados en diferentes áreas del diagnóstico clínico.</p>
+        <div class="equipo-grid">
+            <div class="equipo-card">
+                <i class="fas fa-user-md"></i>
+                <h4>Bioquímicos</h4>
+                <p>Profesionales especializados en bioquímica clínica, hematología, inmunología y microbiología.</p>
+            </div>
+            <div class="equipo-card">
+                <i class="fas fa-microscope"></i>
+                <h4>Técnicos de Laboratorio</h4>
+                <p>Personal técnico capacitado en técnicas analíticas y manejo de equipamiento de alta complejidad.</p>
+            </div>
+            <div class="equipo-card">
+                <i class="fas fa-syringe"></i>
+                <h4>Enfermeros</h4>
+                <p>Enfermeros especializados en extracción de muestras y atención personalizada al paciente.</p>
+            </div>
+            <div class="equipo-card">
+                <i class="fas fa-laptop-medical"></i>
+                <h4>Área de Sistemas</h4>
+                <p>Especialistas en gestión de datos, informática médica y sistemas de información de laboratorio.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="certificaciones-section">
+            <h2>Certificaciones y Acreditaciones</h2>
+            <p class="certificaciones-intro">Nuestro compromiso con la calidad está respaldado por certificaciones nacionales e internacionales que garantizan la confiabilidad de nuestros servicios.</p>
+            <div class="certificaciones-grid">
+                <div class="certificacion-card">
+                    <i class="fas fa-award"></i>
+                    <h4>Fundación Bioquímica Argentina (FBA)</h4>
+                    <p>Acreditados por la FBA, cumpliendo con los más altos estándares de calidad en análisis clínicos a nivel nacional.</p>
+                </div>
+                <div class="certificacion-card">
+                    <i class="fas fa-certificate"></i>
+                    <h4>Programa de Evaluación Externa</h4>
+                    <p>Participamos activamente en programas de evaluación externa de calidad nacionales e internacionales.</p>
+                </div>
+                <div class="certificacion-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Control de Calidad Interno</h4>
+                    <p>Implementamos rigurosos controles de calidad internos diarios para garantizar la precisión de cada resultado.</p>
+                </div>
+                <div class="certificacion-card">
+                    <i class="fas fa-globe"></i>
+                    <h4>Estándares Internacionales</h4>
+                    <p>Seguimos protocolos y normas internacionales de buenas prácticas de laboratorio (ISO 15189).</p>
+                </div>
+            </div>
+        </section>
     </div>
 
     <section class="cta-section">
-        <h2>¿Listo para dar el siguiente paso en tu cuidado de la salud?</h2>
-        <p>Contactanos para coordinar tus estudios o resolver tus dudas.</p>
-        <div class="cta-buttons">
-            <a href="contacto.html" class="btn-primary">Solicitar Turno</a>
-            <a href="obras-sociales.html" class="btn-secondary">Ver Obras Sociales</a>
-        </div>
+        <h2>¿Querés formar parte de nuestro equipo?</h2>
+        <p>Si sos un profesional comprometido con la excelencia, contactanos</p>
+        <a href="contacto.html" class="btn-primary">Contactar</a>
     </section>
 
     <footer>
@@ -634,7 +779,7 @@
     </footer>
 
     <script>
-        // Menu toggle functionality (Copiado de index.html)
+        // Menu toggle functionality
         const menuToggle = document.getElementById('menuToggle');
         const mainNav = document.getElementById('mainNav');
         const menuIcon = menuToggle.querySelector('i');
@@ -642,7 +787,6 @@
         menuToggle.addEventListener('click', () => {
             mainNav.classList.toggle('active');
             
-            // Cambiar icono
             if (mainNav.classList.contains('active')) {
                 menuIcon.classList.remove('fa-bars');
                 menuIcon.classList.add('fa-times');
@@ -652,7 +796,6 @@
             }
         });
 
-        // Cerrar menú al hacer click en un enlace
         const navLinks = mainNav.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -662,12 +805,25 @@
             });
         });
 
-        // Cerrar menú al hacer click fuera
         document.addEventListener('click', (e) => {
             if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
                 mainNav.classList.remove('active');
                 menuIcon.classList.remove('fa-times');
                 menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Header scroll effect
+        const mainHeader = document.getElementById('mainHeader');
+        const scrollThreshold = 50;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                mainHeader.classList.remove('transparent-header');
+                mainHeader.classList.add('scrolled-header');
+            } else {
+                mainHeader.classList.remove('scrolled-header');
+                mainHeader.classList.add('transparent-header');
             }
         });
     </script>

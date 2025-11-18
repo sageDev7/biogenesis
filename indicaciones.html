@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicaciones - Laboratorio BioGenesis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            color: white;
+            padding: 1rem 0;
+            position: fixed; 
+            width: 100%; 
+            top: 0;
+            z-index: 1000;
+            transition: box-shadow 0.7s; 
+            background-color: transparent;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+            z-index: -1;
+        }
+
+        header.transparent-header::before {
+            opacity: 0;
+        }
+
+        header.transparent-header {
+            box-shadow: none !important;
+        }
+
+        header.scrolled-header::before {
+            opacity: 1;
+        }
+
+        header.scrolled-header {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            display: block; 
+            padding: 0.5rem 0;
+        }
+
+        nav a:hover {
+            color: #CDDC39;
+        }
+
+        nav a.active-page {
+            color: #CDDC39;
+        }
+        
+        nav a.active-page:hover {
+            color: #CDDC39;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 77, 64, 0.85), rgba(0, 77, 64, 0.85)), 
+                        url('https://i.pinimg.com/1200x/86/ff/e9/86ffe94b00cea02c3d2c3f18bce327c3.jpg') center/cover;
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            margin-top: 0;
+            padding-top: 10rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .intro-section h2 {
+            color: #004D40;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: linear-gradient(135deg, #CDDC39 0%, #AFB42B 100%);
+            color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .alert-box i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .alert-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Indicaciones Grid */
+        .indicaciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .indicacion-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .indicacion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .indicacion-header {
+            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .indicacion-header i {
+            font-size: 2rem;
+        }
+
+        .indicacion-header h3 {
+            font-size: 1.4rem;
+        }
+
+        .indicacion-content {
+            padding: 2rem;
+        }
+
+        .indicacion-content ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .indicacion-content li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .indicacion-content li:last-child {
+            border-bottom: none;
+        }
+
+        .indicacion-content li i {
+            color: #004D40;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .indicacion-content li strong {
+            color: #004D40;
+        }
+
+        /* Estudios Especiales Section */
+        .estudios-especiales {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .estudios-especiales h2 {
+            color: #004D40;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .estudios-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .estudio-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #00BFA5;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .estudio-card h4 {
+            color: #004D40;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .estudio-card h4 i {
+            color: #00BFA5;
+        }
+
+        .estudio-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .estudio-card li {
+            padding: 0.5rem 0;
+            color: #666;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .estudio-card li i {
+            color: #00BFA5;
+            margin-top: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            margin: 4rem 0;
+        }
+
+        .tips-section h2 {
+            color: #004D40;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .tip-card:hover {
+            background: #e9ecef;
+        }
+
+        .tip-card i {
+            font-size: 3rem;
+            color: #004D40;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card h4 {
+            color: #004D40;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .tip-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Extraccion Section */
+        .extraccion-section {
+            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 10px;
+        }
+
+        .extraccion-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .extraccion-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .extraccion-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .extraccion-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .extraccion-item i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .extraccion-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #004D40;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #00BFA5;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-section i {
+            margin-right: 0.5rem;
+            color: #00BFA5;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                justify-content: center;
+                position: relative;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 1.5rem;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+                padding: 5rem 2rem 2rem;
+                transition: right 0.3s ease-in-out;
+                z-index: 1000;
+                box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav a {
+                display: block;
+                padding: 1rem 0;
+                font-size: 1.1rem;
+            }
+
+            .page-header {
+                padding: 6rem 2rem 3rem;
+                padding-top: 8rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .indicaciones-grid,
+            .estudios-grid,
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .extraccion-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section ul {
+                padding-left: 0; 
+                width: fit-content; 
+                margin: 0 auto; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader" class="transparent-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-microscope"></i>
+                <span>BioGenesis</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li> 
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="indicaciones.html" class="active-page">Indicaciones</a></li>
+                    <li><a href="analisis.html">Análisis que Realizamos</a></li>
+                    <li><a href="obras-sociales.html">Obras Sociales</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Indicaciones para Estudios</h1>
+        <p>Preparación correcta para obtener resultados confiables y precisos</p>
+    </section>
+
+    <div class="container">
+        <section class="intro-section">
+            <h2>Preparación Previa a los Análisis</h2>
+            <p>Seguir correctamente las indicaciones previas a la toma de muestra es fundamental para garantizar la confiabilidad de los resultados. A continuación encontrarás las recomendaciones generales y específicas para cada tipo de estudio.</p>
+        </section>
+
+        <div class="alert-box">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>Importante</h3>
+            <p>Si tiene dudas sobre la preparación de su estudio, no dude en consultarnos. Es mejor aclarar cualquier inquietud antes de realizar el análisis para evitar repeticiones innecesarias. Puede comunicarse al <strong>(0351) 423-8765</strong> o por WhatsApp al <strong>351 234-5678</strong>.</p>
+        </div>
+
+        <div class="indicaciones-grid">
+            <!-- Indicaciones Generales -->
+            <div class="indicacion-card">
+                <div class="indicacion-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Indicaciones Generales</h3>
+                </div>
+                <div class="indicacion-content">
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Ayuno:</strong> 8 a 12 horas para la mayoría de los estudios de rutina. Puede tomar agua y cepillarse los dientes.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Dieta previa:</strong> Mantenga su alimentación habitual la noche anterior, sin excesos.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Medicación:</strong> Continue con su medicación habitual salvo indicación contraria de su médico.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span><strong>No suspender:</strong> Antibióticos, antihipertensivos ni anticonceptivos.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Ejercicio:</strong> Evite actividad física intensa 48-72 horas antes.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Tabaco:</strong> No fumar antes de la extracción.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Horario:</strong> Concurra temprano, preferentemente antes de las 10:00 hs.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Perfil Lipídico -->
+            <div class="indicacion-card">
+                <div class="indicacion-header">
+                    <i class="fas fa-heart"></i>
+                    <h3>Perfil Lipídico</h3>
+                </div>
+                <div class="indicacion-content">
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Ayuno:</strong> 12 horas obligatorias.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Puede tomar agua durante el ayuno.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Mantenga su dieta habitual los 3 días previos.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>No consumir alcohol 72 horas antes.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Incluye: Colesterol total, HDL, LDL, Triglicéridos.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Glucemia -->
+            <div class="indicacion-card">
+                <div class="indicacion-header">
+                    <i class="fas fa-cubes"></i>
+                    <h3>Glucemia</h3>
+                </div>
+                <div class="indicacion-content">
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Ayuno:</strong> 8 horas mínimo.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Solo puede tomar agua durante el ayuno.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>No consumir café, té ni mate.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Cepillarse los dientes sin dentífrico.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>No realizar ejercicio antes de la extracción.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Hormonas Tiroideas -->
+            <div class="indicacion-card">
+                <div class="indicacion-header">
+                    <i class="fas fa-dna"></i>
+                    <h3>Hormonas Tiroideas</h3>
+                </div>
+                <div class="indicacion-content">
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Ayuno:</strong> 8 horas.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Si toma medicación tiroidea, NO tomarla antes de la extracción.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Tome la medicación después de la extracción.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Informe al laboratorio qué medicamento toma y en qué dosis.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Incluye: TSH, T3, T4, T4 libre.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PSA -->
+            <div class="indicacion-card">
+                <div class="indicacion-header">
+                    <i class="fas fa-male"></i>
+                    <h3>PSA (Antígeno Prostático)</h3>
+                </div>
+                <div class="indicacion-content">
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i><span><strong>Ayuno:</strong> 8 horas.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Abstinencia sexual de 48 horas previas.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Esperar 7 días después de tacto rectal o ecografía transrectal.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Esperar 10 días después de biopsia prostática.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Evitar ciclismo o ejercicio intenso 48 hs antes.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Orina Completa -->
+            <div class="indicacion-card">
+                <div class="indicacion-header">
+                    <i class="fas fa-flask"></i>
+                    <h3>Orina Completa</h3>
+                </div>
+                <div class="indicacion-content">
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i><span>Recolectar la primera orina de la mañana.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Realizar higiene íntima completa antes de la recolección.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Descartar el primer chorro de orina.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Recolectar la parte media de la micción en frasco estéril.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>No recolectar durante el período menstrual.</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Entregar la muestra al laboratorio dentro de las 2 horas.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="estudios-especiales">
+        <h2>Estudios Especiales</h2>
+        <div class="estudios-grid">
+            <div class="estudio-card">
+                <h4><i class="fas fa-chart-line"></i>Curva de Glucosa (PTOG)</h4>
+                <ul>
+                    <li><i class="fas fa-circle"></i>Ayuno de 12 horas</li>
+                    <li><i class="fas fa-circle"></i>Dieta rica en carbohidratos 3 días previos</li>
+                    <li><i class="fas fa-circle"></i>No fumar durante el estudio</li>
+                    <li><i class="fas fa-circle"></i>Permanencia en el laboratorio: 2-3 horas</li>
+                    <li><i class="fas fa-circle"></i>Traer material de lectura</li>
+                    <li><i class="fas fa-circle"></i>No realizar actividad física</li>
+                </ul>
+            </div>
+
+            <div class="estudio-card">
+                <h4><i class="fas fa-hourglass-half"></i>Orina de 24 Horas</h4>
+                <ul>
+                    <li><i class="fas fa-circle"></i>Retirar recipiente especial del laboratorio</li>
+                    <li><i class="fas fa-circle"></i>Descartar primera orina de la mañana</li>
+                    <li><i class="fas fa-circle"></i>Recolectar TODA la orina durante 24 horas</li>
+                    <li><i class="fas fa-circle"></i>Incluir primera orina del día siguiente</li>
+                    <li><i class="fas fa-circle"></i>Conservar refrigerada durante la recolección</li>
+                    <li><i class="fas fa-circle"></i>Entregar inmediatamente al terminar</li>
+                </ul>
+            </div>
+
+            <div class="estudio-card">
+                <h4><i class="fas fa-bacteria"></i>Urocultivo</h4>
+                <ul>
+                    <li><i class="fas fa-circle"></i>Primera orina de la mañana</li>
+                    <li><i class="fas fa-circle"></i>Retención urinaria de 3-4 horas mínimo</li>
+                    <li><i class="fas fa-circle"></i>Higiene genital exhaustiva</li>
+                    <li><i class="fas fa-circle"></i>Frasco estéril (retirar del laboratorio)</li>
+                    <li><i class="fas fa-circle"></i>Recolectar segunda porción del chorro</li>
+                    <li><i class="fas fa-circle"></i>Sin antibióticos 72 horas previas</li>
+                    <li><i class="fas fa-circle"></i>Entregar en menos de 2 horas</li>
+                </ul>
+            </div>
+
+            <div class="estudio-card">
+                <h4><i class="fas fa-poop"></i>Parasitológico de Materia Fecal</h4>
+                <ul>
+                    <li><i class="fas fa-circle"></i>Retirar frasco con conservante del laboratorio</li>
+                    <li><i class="fas fa-circle"></i>Materia fecal recién emitida</li>
+                    <li><i class="fas fa-circle"></i>No usar laxantes</li>
+                    <li><i class="fas fa-circle"></i>Tomar muestra del tamaño de una nuez</li>
+                    <li><i class="fas fa-circle"></i>Si hay zonas con sangre o moco, incluirlas</li>
+                    <li><i class="fas fa-circle"></i>Entregar dentro de las 2 horas</li>
+                </ul>
+            </div>
+
+            <div class="estudio-card">
+                <h4><i class="fas fa-lungs"></i>Esputo (Baciloscopia)</h4>
+                <ul>
+                    <li><i class="fas fa-circle"></i>Primera hora de la mañana en ayunas</li>
+                    <li><i class="fas fa-circle"></i>Enjuagar boca solo con agua</li>
+                    <li><i class="fas fa-circle"></i>No cepillarse los dientes</li>
+                    <li><i class="fas fa-circle"></i>Toser profundamente para expulsar secreción</li>
+                    <li><i class="fas fa-circle"></i>Recolectar en frasco estéril</li>
+                    <li><i class="fas fa-circle"></i>Entregar inmediatamente al laboratorio</li>
+                </ul>
+            </div>
+
+            <div class="estudio-card">
+                <h4><i class="fas fa-microscope"></i>Espermograma</h4>
+                <ul>
+                    <li><i class="fas fa-circle"></i>Abstinencia sexual de 3 a 5 días</li>
+                    <li><i class="fas fa-circle"></i>Recolección por masturbación</li>
+                    <li><i class="fas fa-circle"></i>Recolectar TODA la muestra</li>
+                    <li><i class="fas fa-circle"></i>Frasco estéril de boca ancha</li>
+                    <li><i class="fas fa-circle"></i>Puede recolectarse en el laboratorio o domicilio</li>
+                    <li><i class="fas fa-circle"></i>Si es en domicilio, entregar en menos de 30 min</li>
+                    <li><i class="fas fa-circle"></i>Mantener a temperatura corporal durante traslado</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="tips-section">
+            <h2>Consejos Útiles</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <i class="fas fa-clock"></i>
+                    <h4>Horarios Recomendados</h4>
+                    <p>Para estudios con ayuno, recomendamos concurrir entre las 7:00 y 10:00 hs para mayor comodidad y mejores resultados.</p>
+                </div>
+
+                <div class="tip-card">
+                    <i class="fas fa-file-medical"></i>
+                    <h4>Traiga su Orden Médica</h4>
+                    <p>No olvide traer la orden de su médico y credencial de obra social o prepaga si corresponde.</p>
+                </div>
+
+                <div class="tip-card">
+                    <i class="fas fa-phone-alt"></i>
+                    <h4>Consulte sus Dudas</h4>
+                    <p>Si tiene dudas sobre la preparación de su estudio, comuníquese con nosotros antes de concurrir.</p>
+                </div>
+
+                <div class="tip-card">
+                    <i class="fas fa-tint"></i>
+                    <h4>Hidratación</h4>
+                    <p>Manténgase bien hidratado los días previos al análisis, esto facilita la extracción de sangre.</p>
+                </div>
+
+                <div class="tip-card">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <h4>Frascos Especiales</h4>
+                    <p>Para orina de 24hs, urocultivo y otros estudios especiales, retire el frasco del laboratorio previamente.</p>
+                </div>
+
+                <div class="tip-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h4>Reserve su Turno</h4>
+                    <p>Para mayor comodidad y evitar esperas, puede solicitar turno telefónicamente o por WhatsApp.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="extraccion-section">
+        <h2>Extracción a Domicilio</h2>
+        <p>Realizamos extracciones de sangre en la comodidad de su hogar</p>
+        
+        <div class="extraccion-content">
+            <div class="extraccion-item">
+                <i class="fas fa-home"></i>
+                <h4>Comodidad</h4>
+                <p>Atención personalizada en su domicilio, ideal para personas con movilidad reducida, adultos mayores o pacientes con condiciones especiales.</p>
+            </div>
+
+            <div class="extraccion-item">
+                <i class="fas fa-calendar-alt"></i>
+                <h4>Días y Horarios</h4>
+                <p>Servicio disponible de lunes a sábado. Solicite su turno con anticipación llamando al (0351) 423-8765.</p>
+            </div>
+
+            <div class="extraccion-item">
+                <i class="fas fa-user-nurse"></i>
+                <h4>Personal Capacitado</h4>
+                <p>Nuestros profesionales cuentan con la experiencia y equipamiento necesario para realizar extracciones seguras en su hogar.</p>
+            </div>
+        </div>
+
+        <a href="contacto.html" class="btn-primary">Solicitar Extracción a Domicilio</a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Laboratorio BioGenesis</h3>
+                <p>Calidad y excelencia en análisis clínicos desde 1998.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>Av. Colón 1250, Córdoba</li>
+                    <li><i class="fas fa-phone"></i>351 423-8765</li>
+                    <li><i class="fas fa-envelope"></i>info@biogenesis.com.ar</li>
+                    <li><i class="fa-brands fa-whatsapp"></i>351 234-5678</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <ul>
+                    <li>Lunes a Viernes: 7:00 - 20:00 hs</li>
+                    <li>Sábados: 7:30 - 13:00 hs</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces</h3>
+                <ul>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="indicaciones.html">Preparación para Estudios</a></li>
+                    <li><a href="obras-sociales.html">Obras Sociales</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="font-size: 0.7rem;">&copy; 2025 Laboratorio BioGenesis - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        const navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+                mainNav.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Header scroll effect
+        const mainHeader = document.getElementById('mainHeader');
+        const scrollThreshold = 50;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                mainHeader.classList.remove('transparent-header');
+                mainHeader.classList.add('scrolled-header');
+            } else {
+                mainHeader.classList.remove('scrolled-header');
+                mainHeader.classList.add('transparent-header');
+            }
+        });
+    </script>
+</body>
+</html>

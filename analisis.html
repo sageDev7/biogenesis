@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis que Realizamos - Laboratorio BioGenesis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            color: white;
+            padding: 1rem 0;
+            position: fixed; 
+            width: 100%; 
+            top: 0;
+            z-index: 1000;
+            transition: box-shadow 0.7s; 
+            background-color: transparent;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+            z-index: -1;
+        }
+
+        header.transparent-header::before {
+            opacity: 0;
+        }
+
+        header.transparent-header {
+            box-shadow: none !important;
+        }
+
+        header.scrolled-header::before {
+            opacity: 1;
+        }
+
+        header.scrolled-header {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            display: block; 
+            padding: 0.5rem 0;
+        }
+
+        nav a:hover {
+            color: #CDDC39;
+        }
+
+        nav a.active-page {
+            color: #CDDC39;
+        }
+        
+        nav a.active-page:hover {
+            color: #CDDC39;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 77, 64, 0.85), rgba(0, 77, 64, 0.85)), 
+                        url('https://i.pinimg.com/736x/24/75/29/24752974f47425126c71f91b3f079e67.jpg') center/cover;
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            margin-top: 0;
+            padding-top: 10rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .intro-section h2 {
+            color: #004D40;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Search Box */
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 3.5rem 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid #004D40;
+            border-radius: 50px;
+            outline: none;
+            transition: box-shadow 0.3s;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 0 15px rgba(0, 77, 64, 0.3);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #004D40;
+            font-size: 1.2rem;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .category-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Analisis List */
+        .analisis-section {
+            margin-bottom: 4rem;
+        }
+
+        .analisis-section h2 {
+            color: #004D40;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #00BFA5;
+            text-align: center;
+        }
+
+        .analisis-columns {
+            column-count: 3;
+            column-gap: 2rem;
+        }
+
+        .analisis-item {
+            break-inside: avoid;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .analisis-item i {
+            color: #00BFA5;
+            margin-top: 0.3rem;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+
+        .analisis-item span {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .analisis-item.hidden {
+            display: none;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: 10px;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #004D40;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #00BFA5;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-section i {
+            margin-right: 0.5rem;
+            color: #00BFA5;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .analisis-columns {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                justify-content: center;
+                position: relative;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 1.5rem;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%);
+                padding: 5rem 2rem 2rem;
+                transition: right 0.3s ease-in-out;
+                z-index: 1000;
+                box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav a {
+                display: block;
+                padding: 1rem 0;
+                font-size: 1.1rem;
+            }
+
+            .page-header {
+                padding: 6rem 2rem 3rem;
+                padding-top: 8rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analisis-columns {
+                column-count: 1;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section ul {
+                padding-left: 0; 
+                width: fit-content; 
+                margin: 0 auto; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader" class="transparent-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-microscope"></i>
+                <span>BioGenesis</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li> 
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="indicaciones.html">Indicaciones</a></li>
+                    <li><a href="analisis.html" class="active-page">Análisis que Realizamos</a></li>
+                    <li><a href="obras-sociales.html">Obras Sociales</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Análisis que Realizamos</h1>
+        <p>Más de 500 determinaciones diferentes con tecnología de última generación</p>
+    </section>
+
+    <div class="container">
+        <section class="intro-section">
+            <h2>Especialidades del Servicio de Laboratorio</h2>
+            <p>Te presentamos el listado completo de todas las especialidades y estudios que realizamos en nuestro laboratorio.</p>
+        </section>
+
+        <div class="categories-grid">
+            <div class="category-card">
+                <i class="fas fa-vial"></i>
+                <h3>Bioquímica Clínica</h3>
+                <p>Análisis metabólicos, enzimáticos y de función orgánica</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-tint"></i>
+                <h3>Hematología</h3>
+                <p>Estudios de sangre, coagulación y elementos formes</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-dna"></i>
+                <h3>Inmunología</h3>
+                <p>Anticuerpos, marcadores tumorales e inmunológicos</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-bacteria"></i>
+                <h3>Microbiología</h3>
+                <p>Cultivos, antibiogramas y estudios bacteriológicos</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-syringe"></i>
+                <h3>Endocrinología</h3>
+                <p>Hormonas, metabolismo y función glandular</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-microscope"></i>
+                <h3>Parasitología</h3>
+                <p>Estudios de parásitos y organismos microscópicos</p>
+            </div>
+        </div>
+
+        <section class="analisis-section">
+            <h2>Lista Completa de Análisis</h2>
+            <p style="text-align: center; font-style: italic; margin-bottom: 1.5rem; color: #666;">Utilizá el buscador para encontrar rápidamente el análisis que necesitás.</p>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar análisis (ej: Hemograma, Glucemia, Colesterol...)">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <div class="analisis-columns" id="analisisList">
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Ácido Úrico</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Ácido Fólico</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>ACTH</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Albúmina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Aldosterona</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Amilasa</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Anticoagulante Lúpico</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Anticuerpos Anti-Nucleares (FAN)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Antígeno Prostático (PSA)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>ASTO</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Bilirrubina Total y Directa</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Búsqueda de BAAR en Esputo</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>B-HCG (Gonadotrofina Coriónica)</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Calcio</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Carbamazepina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Ceruloplasmina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Chagas</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Clearance de Creatinina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Colesterol Total</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Colesterol HDL</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Colesterol LDL</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Complemento C3</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Complemento C4</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Coprocultivo</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Cortisol</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>CPK (Creatin Fosfoquinasa)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>CPK-MB</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Creatinina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Curva de Glucosa (PTOG)</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Dímero D</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Dosaje de Drogas en Orina</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Electrolitos (Ionograma)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Eritrosedimentación</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Espermograma</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Estradiol</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Examen de Orina Completo</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Factor Reumatoideo</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Ferritina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Fibrinógeno</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Fosfatasa Alcalina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Fósforo</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>FSH (Hormona Folículo Estimulante)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>FTA-ABS</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Gamma GT</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Gastrina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Glucemia</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Glucosa 6 Fosfato Deshidrogenasa</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>GOT (AST)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>GPT (ALT)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Grupo Sanguíneo y Factor RH</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Haptoglobina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Hemoglobina Glicosilada</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Hemograma Completo</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Hepatitis A - Anticuerpos IgG e IgM</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Hepatitis B - Antígeno de Superficie</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Hepatitis C - Anticuerpos</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Herpes Simple I y II - Anticuerpos</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Hierro Sérico</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>HIV (Test de Detección)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Homocisteína</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Inmunoglobulina A (IgA)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Inmunoglobulina E (IgE)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Inmunoglobulina G (IgG)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Inmunoglobulina M (IgM)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Insulina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Ionograma</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>KPTT</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Lactato Deshidrogenasa (LDH)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>LH (Hormona Luteinizante)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Lipasa</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Lipidograma</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Litio</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Magnesio</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Marcadores Tumorales (CA 125, CA 19-9, CEA)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Microalbuminuria</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Monotest</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Orina Completa</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Orina de 24 Horas</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Osteocalcina</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Parasitológico de Materia Fecal</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Parathormona (PTH)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>PCR (Proteína C Reactiva)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Péptido C</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Perfil Hepático</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Perfil Lipídico</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Perfil Tiroideo</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Plaquetas</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Potasio</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Progesterona</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Prolactina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Proteína C Reactiva Ultrasensible</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Proteínas Totales</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Proteinograma Electroforético</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Proteinuria de 24 Horas</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Protrombina (Tiempo de)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>PSA (Antígeno Prostático)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>PSA Libre</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Recuento de Plaquetas</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Recuento de Reticulocitos</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Renina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Rubéola - Anticuerpos IgG e IgM</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Sangre Oculta en Materia Fecal</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Sedimento Urinario</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>SHBG (Globulina Transportadora de Hormonas Sexuales)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Sodio</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Somatomedina C (IGF-1)</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>T3 (Triiodotironina)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>T4 (Tiroxina)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>T4 Libre</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Testosterona Total</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Testosterona Libre</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Tiempo de Coagulación</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Tiempo de Protrombina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Tiempo de Sangría</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Tiroglobulina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Toxoplasmosis - Anticuerpos IgG e IgM</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Transferrina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Transglutaminasa (Anticuerpos Anti)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Triglicéridos</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Troponina</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>TSH (Hormona Estimulante de Tiroides)</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Urea</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Uricemia (Ácido Úrico)</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Urocultivo</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Varicela Zoster - Anticuerpos IgG</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>VDRL</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Vitamina B12</span></div>
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>Vitamina D</span></div>
+                
+                <div class="analisis-item"><i class="fas fa-circle"></i><span>17-OH Progesterona</span></div>
+            </div>
+            
+            <div class="no-results" id="noResults">
+                <i class="fas fa-search"></i>
+                <h3>No se encontraron resultados</h3>
+                <p>Intenta con otro término de búsqueda</p>
+            </div>
+        </section>
+    </div>
+
+    <section class="cta-section">
+        <h2>¿No encontrás el análisis que buscás?</h2>
+        <p>Contactanos y te asesoramos sobre el estudio que necesitás</p>
+        <a href="contacto.html" class="btn-primary">Contactar</a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Laboratorio BioGenesis</h3>
+                <p>Calidad y excelencia en análisis clínicos desde 1998.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>Av. Colón 1250, Córdoba</li>
+                    <li><i class="fas fa-phone"></i>351 423-8765</li>
+                    <li><i class="fas fa-envelope"></i>info@biogenesis.com.ar</li>
+                    <li><i class="fa-brands fa-whatsapp"></i>351 234-5678</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <ul>
+                    <li>Lunes a Viernes: 7:00 - 20:00 hs</li>
+                    <li>Sábados: 7:30 - 13:00 hs</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces</h3>
+                <ul>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="indicaciones.html">Preparación para Estudios</a></li>
+                    <li><a href="obras-sociales.html">Obras Sociales</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p style="font-size: 0.7rem;">&copy; 2025 Laboratorio BioGenesis - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        const navLinks = mainNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+                mainNav.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Header scroll effect
+        const mainHeader = document.getElementById('mainHeader');
+        const scrollThreshold = 50;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > scrollThreshold) {
+                mainHeader.classList.remove('transparent-header');
+                mainHeader.classList.add('scrolled-header');
+            } else {
+                mainHeader.classList.remove('scrolled-header');
+                mainHeader.classList.add('transparent-header');
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const analisisItems = document.querySelectorAll('.analisis-item');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            analisisItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0 && searchTerm !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
