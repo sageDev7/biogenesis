@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio BioGenesis - Análisis Clínicos de Excelencia</title>
+    <title>Nosotros - Laboratorio BioGenesis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* INICIO DEL ESTILO COPIADO DE INDEX.HTML */
         * {
             margin: 0;
             padding: 0;
@@ -16,6 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            background-color: #f8f9fa; /* Fondo claro para la página */
         }
 
         /* Header - PALETA MODIFICADA */
@@ -72,7 +74,6 @@
             text-decoration: none;
             transition: color 0.3s;
             font-weight: 500;
-            /* Añadido para habilitar el padding completo del fondo activo */
             display: block; 
             padding: 0.5rem 0;
         }
@@ -81,7 +82,6 @@
             color: #CDDC39; /* VERDE LIMA */
         }
 
-        /* ESTILO CORREGIDO Y MODIFICADO para la página activa */
         nav a.active-page {
             color: #CDDC39;
         }
@@ -89,129 +89,44 @@
         nav a.active-page:hover {
             color: #CDDC39;
         }
-
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            height: 500px;
-            overflow: hidden;
-        }
-
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .slide-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            color: white;
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .slide-content h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .slide-content p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Gradientes de slides modificados a Teal */
-        .slide:nth-child(1) {
-            background: linear-gradient(rgba(0, 77, 64, 0.7), rgba(0, 77, 64, 0.7)), /* RGB de #004D40 */
-                        url('https://i.pinimg.com/1200x/cf/a8/52/cfa852138c1f4729c23e3a592a3dd57b.jpg') center/cover;
-        }
-
-        .slide:nth-child(2) {
-            background: linear-gradient(rgba(0, 77, 64, 0.7), rgba(0, 77, 64, 0.7)), /* RGB de #004D40 */
-                        url('https://i.pinimg.com/1200x/86/ff/e9/86ffe94b00cea02c3d2c3f18bce327c3.jpg') center/cover;
-        }
-
-        .slide:nth-child(3) {
-            background: linear-gradient(rgba(0, 77, 64, 0.7), rgba(0, 77, 64, 0.7)), /* RGB de #004D40 */
-                        url('https://i.pinimg.com/736x/24/75/29/24752974f47425126c71f91b3f079e67.jpg') center/cover;
-        }
-
+        
+        /* Botones */
         .btn-primary {
-            background: white;
-            color: #004D40; /* TEAL OSCURO */
+            background: #004D40; /* TEAL OSCURO */
+            color: white;
             padding: 1rem 2rem;
             border: none;
             border-radius: 5px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
             text-decoration: none;
             display: inline-block;
         }
-
         .btn-primary:hover {
+            background: #00BFA5; /* TEAL MEDIO */
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* Info Cards */
-        .info-cards {
-            max-width: 1200px;
-            margin: -80px auto 4rem;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            position: relative;
-            z-index: 10;
+        .btn-secondary {
+            background: transparent;
+            color: #004D40;
+            padding: 1rem 2rem;
+            border: 2px solid #004D40;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .info-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .info-card i {
-            font-size: 3rem;
-            color: #004D40; /* TEAL OSCURO */
-            margin-bottom: 1rem;
-        }
-
-        .info-card h3 {
-            color: #004D40; /* TEAL OSCURO */
-            margin-bottom: 1rem;
+        .btn-secondary:hover {
+            background: #004D40;
+            color: white;
         }
 
         /* Main Content */
@@ -220,68 +135,150 @@
             margin: 0 auto;
             padding: 4rem 2rem;
         }
-
-        .welcome-section {
+        
+        /* Sección Título Hero (Simulación de Banner Fijo) */
+        .page-hero {
+            background: linear-gradient(rgba(0, 77, 64, 0.8), rgba(0, 191, 165, 0.8)), 
+                        url('https://i.pinimg.com/1200x/cf/a8/52/cfa852138c1f4729c23e3a592a3dd57b.jpg') center/cover;
+            color: white;
+            padding: 6rem 2rem;
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 2rem;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.2);
         }
 
-        .welcome-section h2 {
-            color: #004D40; /* TEAL OSCURO */
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        /* Títulos de sección */
+        .section-title {
+            text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 1rem;
+            color: #004D40; 
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #00BFA5;
+            margin: 10px auto 0;
+            border-radius: 2px;
         }
 
-        .welcome-section p {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 800px;
-            margin: 0 auto;
+        /* Sección de Contenido de Nosotros */
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
         }
 
-        /* Features Grid */
-        .features-grid {
+        .about-text {
+            flex: 1 1 55%;
+            min-width: 300px;
+        }
+
+        .about-image {
+            flex: 1 1 30%;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .about-image img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Misión y Visión Cards */
+        .mvv-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin: 4rem 0;
+            margin-bottom: 4rem;
         }
 
-        .feature {
-            display: flex;
-            gap: 1.5rem;
+        .mvv-card {
+            background-color: white;
             padding: 2rem;
-            background: #f8f9fa;
             border-radius: 10px;
-            transition: background 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #00BFA5; /* Borde superior brillante */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .mvv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
-        .feature:hover {
-            background: #e9ecef;
-        }
-
-        .feature i {
+        .mvv-card i {
             font-size: 2.5rem;
-            color: #004D40; /* TEAL OSCURO */
-            flex-shrink: 0;
+            color: #004D40; 
+            margin-bottom: 1rem;
         }
 
-        .feature-content h3 {
-            color: #004D40; /* TEAL OSCURO */
-            margin-bottom: 0.5rem;
+        .mvv-card h3 {
+            color: #004D40; 
+            margin-bottom: 0.8rem;
         }
 
-        .feature-content p {
+        /* Sección del Equipo */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .team-member {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: scale(1.03);
+        }
+
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 4px solid #00BFA5;
+            padding: 3px;
+        }
+
+        .team-member h4 {
+            color: #004D40; 
+            margin-bottom: 0.3rem;
+        }
+
+        .team-member p {
+            font-size: 0.9rem;
             color: #666;
         }
-
-        /* CTA Section - PALETA MODIFICADA */
+        
+        /* CTA Section - PALETA MODIFICADA (Copied from index.html)*/
         .cta-section {
             background: linear-gradient(135deg, #004D40 0%, #00BFA5 100%); /* TEAL GRADIENTE */
             color: white;
             padding: 4rem 2rem;
             text-align: center;
-            margin: 4rem 0;
+            margin: 4rem 0 0 0; /* Ajustado para que el footer siga inmediatamente */
         }
 
         .cta-section h2 {
@@ -300,24 +297,25 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            padding: 1rem 2rem;
-            border: 2px solid white;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+        
+        .cta-buttons .btn-primary {
+            background: white;
+            color: #004D40;
         }
 
-        .btn-secondary:hover {
-            background: white;
-            color: #004D40; /* TEAL OSCURO */
+        .cta-buttons .btn-primary:hover {
+            background: #CDDC39; /* Verde lima en hover */
+        }
+        
+        .cta-buttons .btn-secondary {
+            color: white;
+            border-color: white;
+        }
+        
+        .cta-buttons .btn-secondary:hover {
+            background: #CDDC39; /* Verde lima en hover */
+            color: #004D40;
+            border-color: #CDDC39;
         }
 
         /* Footer - PALETA MODIFICADA */
@@ -372,7 +370,9 @@
             text-align: center;
             color: #999;
         }
+        /* FIN DEL ESTILO COPIADO DE INDEX.HTML */
 
+        /* MEDIA QUERIES (Ajustado de index.html) */
         @media (max-width: 768px) {
             .header-top {
                 justify-content: center;
@@ -417,24 +417,26 @@
                 font-size: 1.1rem;
             }
             
-
-            .slide-content h2 {
-                font-size: 1.8rem;
+            .page-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                order: -1; /* Coloca la imagen arriba en móvil */
             }
 
-            .slide-content p {
-                font-size: 1rem;
-            }
-
-            .info-cards {
-                margin-top: 2rem;
+            .mvv-grid {
                 grid-template-columns: 1fr;
             }
 
-            .features-grid {
-                grid-template-columns: 1fr;
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
-
+            
             .cta-section h2 {
                 font-size: 1.8rem;
             }
@@ -464,12 +466,12 @@
                 font-size: 0.9rem;
             }
 
-            .slide-content h2 {
-                font-size: 1.5rem;
+            .page-hero {
+                padding: 4rem 1rem;
             }
-
-            .hero-slider {
-                height: 400px;
+            
+            .section-title {
+                font-size: 2rem;
             }
 
             .btn-primary, .btn-secondary {
@@ -491,8 +493,8 @@
             </button>
             <nav id="mainNav">
                 <ul>
-                    <li><a href="index.html" class="active-page">Inicio</a></li> 
-                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="index.html">Inicio</a></li> 
+                    <li><a href="nosotros.html" class="active-page">Nosotros</a></li>
                     <li><a href="indicaciones.html">Indicaciones</a></li>
                     <li><a href="analisis.html">Análisis que Realizamos</a></li>
                     <li><a href="obras-sociales.html">Obras Sociales</a></li>
@@ -502,111 +504,95 @@
         </div>
     </header>
 
-    <section class="hero-slider">
-        <div class="slide active">
-            <div class="slide-overlay"></div>
-            <div class="slide-content">
-                <h2>Tecnología de Última Generación</h2>
-                <p>Equipamiento de vanguardia para resultados precisos y confiables</p>
-                <a href="analisis.html" class="btn-primary">Conocer Servicios</a>
-            </div>
-        </div>
-        <div class="slide">
-            <div class="slide-overlay"></div>
-            <div class="slide-content">
-                <h2>Atención Personalizada</h2>
-                <p>Más de 25 años brindando calidad y calidez en cada análisis</p>
-                <a href="contacto.html" class="btn-primary">Solicitar Turno</a>
-            </div>
-        </div>
-        <div class="slide">
-            <div class="slide-overlay"></div>
-            <div class="slide-content">
-                <h2>Calidad Certificada</h2>
-                <p>Acreditados por los más altos estándares de calidad nacional e internacional</p>
-                <a href="nosotros.html" class="btn-primary">Conocer Más</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="info-cards">
-        <div class="info-card">
-            <i class="fas fa-clock"></i>
-            <h3>Horarios de Atención</h3>
-            <p>Lunes a Viernes<br>7:00 a 20:00 hs</p>
-            <p>Sábados<br>7:30 a 13:00 hs</p>
-        </div>
-        <div class="info-card">
-            <i class="fas fa-home"></i>
-            <h3>Extracción a Domicilio</h3>
-            <p>Servicio todos los días con turnos programados</p>
-            <p><strong>Tel: (0351) 423-8765</strong></p>
-        </div>
-        <div class="info-card">
-            <i class="fas fa-award"></i>
-            <h3>Calidad Certificada</h3>
-            <p>Acreditados por FBA y programas internacionales de control</p>
-        </div>
+    <section class="page-hero">
+        <h1>Comprometidos con la Calidad y tu Salud</h1>
+        <p>Conocé nuestra historia, misión y al equipo de profesionales detrás de cada resultado.</p>
     </section>
 
     <div class="container">
-        <section class="welcome-section">
-            <h2>Bienvenidos a Laboratorio BioGenesis</h2>
-            <p>Somos un laboratorio de análisis clínicos con más de 25 años de trayectoria en la ciudad de Córdoba. Nos especializamos en brindar servicios de diagnóstico de alta complejidad con tecnología de última generación y un equipo de profesionales altamente capacitados.</p>
+        
+        <section>
+            <h2 class="section-title">Nuestra Trayectoria</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Laboratorio BioGenesis fue fundado en 1998 con la visión de convertirse en un referente de diagnóstico clínico de alta calidad en la ciudad de Córdoba. A lo largo de más de dos décadas, hemos crecido de ser un pequeño centro a un laboratorio de alta complejidad, incorporando constantemente tecnología de punta y ampliando nuestra gama de servicios.</p>
+                    <p>Nuestro compromiso inquebrantable con la precisión nos ha llevado a obtener múltiples certificaciones nacionales e internacionales, garantizando que cada muestra es procesada bajo los estándares más rigurosos. Creemos que un diagnóstico preciso es el primer paso hacia una atención médica efectiva, y trabajamos diariamente para ser el socio de confianza de médicos y pacientes.</p>
+                    <p>Hoy, BioGenesis es sinónimo de experiencia, innovación y calidez humana. </p>
+                </div>
+                <div class="about-image">
+                    <img src="https://placehold.co/400x500/004D40/ffffff?text=BioGenesis+1998" alt="Fachada o primera imagen del laboratorio">
+                </div>
+            </div>
         </section>
 
-        <section class="features-grid">
-            <div class="feature">
-                <i class="fas fa-flask"></i>
-                <div class="feature-content">
-                    <h3>Amplia Variedad de Estudios</h3>
-                    <p>Realizamos más de 500 determinaciones diferentes, desde análisis de rutina hasta estudios de alta especialización.</p>
+        <section style="margin-top: 5rem;">
+            <h2 class="section-title">Misión, Visión y Valores</h2>
+            
+            <div class="mvv-grid">
+                <div class="mvv-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Nuestra Misión</h3>
+                    <p>Brindar servicios de análisis clínicos y diagnósticos de alta complejidad, garantizando resultados precisos y oportunos a través de la excelencia técnica, la innovación tecnológica y un profundo sentido ético, para contribuir al cuidado de la salud de la comunidad.</p>
                 </div>
-            </div>
-            <div class="feature">
-                <i class="fas fa-shield-alt"></i>
-                <div class="feature-content">
-                    <h3>Garantía de Calidad</h3>
-                    <p>Participamos activamente en programas de control de calidad internos y externos para garantizar resultados confiables.</p>
+                <div class="mvv-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Nuestra Visión</h3>
+                    <p>Ser el laboratorio de referencia en la región, reconocido por la calidad certificada de nuestros procesos, la atención humana y personalizada, y la constante inversión en ciencia y tecnología para liderar el futuro del diagnóstico clínico.</p>
                 </div>
-            </div>
-            <div class="feature">
-                <i class="fas fa-user-md"></i>
-                <div class="feature-content">
-                    <h3>Personal Especializado</h3>
-                    <p>Contamos con bioquímicos especializados en diferentes áreas y personal técnico en constante capacitación.</p>
-                </div>
-            </div>
-            <div class="feature">
-                <i class="fas fa-building"></i>
-                <div class="feature-content">
-                    <h3>Instalaciones Modernas</h3>
-                    <p>Laboratorio equipado con tecnología de punta y espacios cómodos para la atención de nuestros pacientes.</p>
-                </div>
-            </div>
-            <div class="feature">
-                <i class="fas fa-certificate"></i>
-                <div class="feature-content">
-                    <h3>Acreditación Internacional</h3>
-                    <p>Certificados por organismos nacionales e internacionales que avalan la calidad de nuestros procesos.</p>
-                </div>
-            </div>
-            <div class="feature">
-                <i class="fas fa-handshake"></i>
-                <div class="feature-content">
-                    <h3>Convenios con Obras Sociales</h3>
-                    <p>Trabajamos con las principales obras sociales y prepagas del país.</p>
+                <div class="mvv-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Nuestros Valores</h3>
+                    <ul>
+                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Precisión y Confianza</li>
+                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Ética y Transparencia</li>
+                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Innovación Continua</li>
+                        <li><i class="fas fa-check" style="color: #00BFA5;"></i> Calidez Humana</li>
+                    </ul>
                 </div>
             </div>
         </section>
+        
+        <section style="margin-top: 5rem;">
+            <h2 class="section-title">Conocé a Nuestro Equipo</h2>
+            <p style="text-align: center; margin-bottom: 2rem; font-style: italic;">Un grupo de profesionales altamente calificados y dedicados a tu bienestar.</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=JD" alt="Foto de la Dra. Juliana Díaz" class="member-photo">
+                    <h4>Dra. Juliana Díaz</h4>
+                    <p>Directora Bioquímica</p>
+                    <p style="font-size: 0.8rem; color: #00BFA5;">Especialista en Inmunología</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=AR" alt="Foto del Lic. Alejandro Ruiz" class="member-photo">
+                    <h4>Lic. Alejandro Ruiz</h4>
+                    <p>Jefe de Laboratorio</p>
+                    <p style="font-size: 0.8rem; color: #00BFA5;">Especialista en Hematología</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=LC" alt="Foto de la Bioq. Laura Castro" class="member-photo">
+                    <h4>Bioq. Laura Castro</h4>
+                    <p>Área de Biología Molecular</p>
+                    <p style="font-size: 0.8rem; color: #00BFA5;">Investigadora y Docente</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://placehold.co/120x120/00BFA5/004D40?text=EM" alt="Foto del Téc. Enrique Martínez" class="member-photo">
+                    <h4>Téc. Enrique Martínez</h4>
+                    <p>Coordinador de Extracciones</p>
+                    <p style="font-size: 0.8rem; color: #00BFA5;">Atención y Calidez</p>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <section class="cta-section">
-        <h2>¿Necesitás realizar un análisis?</h2>
-        <p>Solicitá tu turno online o comunicate con nosotros</p>
+        <h2>¿Listo para dar el siguiente paso en tu cuidado de la salud?</h2>
+        <p>Contactanos para coordinar tus estudios o resolver tus dudas.</p>
         <div class="cta-buttons">
             <a href="contacto.html" class="btn-primary">Solicitar Turno</a>
-            <a href="analisis.html" class="btn-secondary">Ver Nuestros Análisis</a>
+            <a href="obras-sociales.html" class="btn-secondary">Ver Obras Sociales</a>
         </div>
     </section>
 
@@ -648,7 +634,7 @@
     </footer>
 
     <script>
-        // Menu toggle functionality
+        // Menu toggle functionality (Copiado de index.html)
         const menuToggle = document.getElementById('menuToggle');
         const mainNav = document.getElementById('mainNav');
         const menuIcon = menuToggle.querySelector('i');
@@ -683,33 +669,6 @@
                 menuIcon.classList.remove('fa-times');
                 menuIcon.classList.add('fa-bars');
             }
-        });
-
-        // Slider functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
-        }
-        
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-        
-        setInterval(nextSlide, 5000);
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
         });
     </script>
 </body>
