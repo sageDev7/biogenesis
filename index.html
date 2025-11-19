@@ -128,8 +128,10 @@
         /* Hero Slider */
         .hero-slider {
             position: relative;
-            height: 500px;
+            height: 600px;
             overflow: hidden;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
             /* Removimos el margen negativo, ya que position: fixed lo solapa automáticamente */
         }
 
@@ -454,6 +456,10 @@
                 font-size: 1.1rem;
             }
             
+            .hero-slider {
+                margin-top: 3rem;
+                margin-bottom: 1rem;
+            }
 
             .slide-content h2 {
                 font-size: 1.8rem;
@@ -517,7 +523,7 @@
     </style>
 </head>
 <body>
-    <header id="mainHeader" class="transparent-header">
+    <header id="mainHeader" class="scrolled-header">
         <div class="header-top">
             <div class="logo">
                 <i class="fas fa-microscope"></i>
@@ -749,21 +755,6 @@
             });
         });
 
-        // Lógica para cambiar el estilo del Header al hacer scroll
-        const mainHeader = document.getElementById('mainHeader');
-        const scrollThreshold = 50; // Pixeles para cambiar el estilo
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > scrollThreshold) {
-                // El usuario ha scrolleado más allá del umbral
-                mainHeader.classList.remove('transparent-header');
-                mainHeader.classList.add('scrolled-header');
-            } else {
-                // El usuario está cerca del top de la página
-                mainHeader.classList.remove('scrolled-header');
-                mainHeader.classList.add('transparent-header');
-            }
-        });
     </script>
 </body>
 </html>

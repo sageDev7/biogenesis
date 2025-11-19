@@ -126,7 +126,8 @@
             padding: 8rem 2rem 4rem;
             text-align: center;
             margin-top: 0;
-            padding-top: 10rem;
+            padding-top: 12rem;
+            padding-bottom: 10rem;
         }
 
         .page-header h1 {
@@ -161,6 +162,7 @@
             color: #004D40;
             font-size: 2rem;
             margin-bottom: 2rem;
+            text-align: center;
         }
 
         .info-item {
@@ -561,7 +563,7 @@
     </style>
 </head>
 <body>
-    <header id="mainHeader" class="transparent-header">
+    <header id="mainHeader" class="scrolled-header">
         <div class="header-top">
             <div class="logo">
                 <i class="fas fa-microscope"></i>
@@ -713,7 +715,7 @@
     </div>
 
     <section class="horarios-section">
-        <h2>Horarios de Atención</h2>
+        <h2>Horarios de Extracción</h2>
         <div class="horarios-grid">
             <div class="horario-card">
                 <i class="fas fa-sun"></i>
@@ -815,20 +817,6 @@
                 mainNav.classList.remove('active');
                 menuIcon.classList.remove('fa-times');
                 menuIcon.classList.add('fa-bars');
-            }
-        });
-
-        // Header scroll effect
-        const mainHeader = document.getElementById('mainHeader');
-        const scrollThreshold = 50;
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > scrollThreshold) {
-                mainHeader.classList.remove('transparent-header');
-                mainHeader.classList.add('scrolled-header');
-            } else {
-                mainHeader.classList.remove('scrolled-header');
-                mainHeader.classList.add('transparent-header');
             }
         });
 
